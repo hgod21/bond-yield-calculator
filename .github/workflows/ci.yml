@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Build Shared
+      run: pnpm --filter @bond/shared build
+
+    - name: Build Backend
+      run: pnpm --filter @bond/backend build
+
+    - name: Build Frontend
+      run: pnpm --filter @bond/frontend build
+
+    - name: Test Backend
+      run: pnpm --filter @bond/backend test

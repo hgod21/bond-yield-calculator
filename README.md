@@ -127,21 +127,24 @@ docker compose up --build
 ## ☁️ Deployment
 
 ### Backend → Render
-| Setting | Value |
-|---------|-------|
-| Root directory | `apps/backend` |
-| Build command | `pnpm install && pnpm build` |
-| Start command | `node dist/main.js` |
-| Environment | `NODE_ENV=production`, `FRONTEND_URL=<vercel-url>` |
+1. **Create a New Web Service**: Link your GitHub repo.
+2. **Root Directory**: `apps/backend`
+3. **Build Command**: `pnpm install && pnpm build`
+4. **Start Command**: `node dist/main.js`
+5. **Environment Variables**:
+   - `NODE_ENV`: `production`
+   - `FRONTEND_URL`: Your Vercel URL (e.g., `https://bond-yield.vercel.app`)
+   - `PORT`: `3000` (or leave default)
 
 ### Frontend → Vercel
-| Setting | Value |
-|---------|-------|
-| Root directory | `apps/frontend` |
-| Framework | Vite |
-| Build command | `pnpm build` |
-| Output directory | `dist` |
-| Environment | `VITE_API_URL=<render-url>` |
+1. **Create a New Project**: Import the monorepo.
+2. **Root Directory**: `apps/frontend`
+3. **Framework Preset**: `Vite`
+4. **Build Command**: `pnpm build`
+5. **Output Directory**: `dist`
+6. **Environment Variables**:
+   - `VITE_API_URL`: Your Render backend URL (e.g., `https://bond-api.onrender.com`)
+
 
 ---
 
