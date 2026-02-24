@@ -113,7 +113,10 @@ export function BondEducation(): React.ReactElement {
                                 the bond is held to maturity.
                             </p>
 
-                            {/* Premium / Discount insight */}
+                            {/* Premium / Discount / Par insight */}
+                            <p className="text-xs text-slate-400">
+                                <strong className="text-slate-200">Par Bond</strong>: Market Price = Face Value. YTM = Coupon Rate.
+                            </p>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 {[
                                     { label: 'Discount Bond', cond: 'Market Price < Face Value', result: 'YTM > Coupon Rate', color: 'rose' },
@@ -176,6 +179,7 @@ export function BondEducation(): React.ReactElement {
                             <ul className="list-disc list-inside space-y-1 text-xs text-slate-400">
                                 <li><span className="text-slate-200">Current yield</span> — quick snapshot of annual return vs. today's price.</li>
                                 <li><span className="text-slate-200">YTM</span> — total return assuming held to maturity and coupons reinvested.</li>
+                                <li><span className="text-gold-400">Par bond</span>: Market Price = Face Value, YTM = Coupon Rate.</li>
                                 <li>Bond at <span className="text-rose-400">discount</span>: YTM &gt; coupon rate. At <span className="text-emerald-400">premium</span>: YTM &lt; coupon rate.</li>
                             </ul>
                         </div>

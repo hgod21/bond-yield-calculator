@@ -52,6 +52,7 @@ export class BondRoute {
      *  - `ytm`               – yield to maturity (Newton-Raphson)
      *  - `totalInterest`     – sum of all coupon payments over the bond's life
      *  - `premiumOrDiscount` – 'Premium' | 'Discount' | 'Par'
+     *      (Par Bond: Market Price = Face Value, YTM = Coupon Rate)
      *  - `cashFlowSchedule`  – per-period breakdown of payments
      *
      * @param dto  Validated request body, automatically bound by `@Body()`.

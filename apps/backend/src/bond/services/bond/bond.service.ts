@@ -248,9 +248,11 @@ export class BondService {
     /**
      * Determines whether a bond is trading at a **Premium**, **Discount**, or **Par**.
      *
-     * - **Premium**  → market price > face value (investors pay more than par)
-     * - **Discount** → market price < face value (investors pay less than par)
-     * - **Par**      → market price = face value (priced at par)
+     * - **Premium**  → market price > face value (investors pay more than par); YTM < coupon rate.
+     * - **Discount** → market price < face value (investors pay less than par); YTM > coupon rate.
+     * - **Par**      → market price = face value (priced at par); YTM = coupon rate.
+     *
+     * Par Bond: Market Price = Face Value, YTM = Coupon Rate.
      *
      * @param marketPrice Current trading price of the bond.
      * @param faceValue   Nominal / par value of the bond.

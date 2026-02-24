@@ -125,12 +125,18 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({ result }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                    A <strong className="text-slate-200">{premiumOrDiscount}</strong> bond trades{' '}
-                    {premiumOrDiscount === 'Premium'
-                        ? 'above face value — meaning YTM < coupon rate.'
-                        : premiumOrDiscount === 'Discount'
-                            ? 'below face value — meaning YTM > coupon rate.'
-                            : 'at face value — meaning YTM = coupon rate.'}
+                    {premiumOrDiscount === 'Par' ? (
+                        <>
+                            <strong className="text-slate-200">Par Bond</strong>: Market Price = Face Value. YTM = Coupon Rate.
+                        </>
+                    ) : (
+                        <>
+                            A <strong className="text-slate-200">{premiumOrDiscount}</strong> bond trades{' '}
+                            {premiumOrDiscount === 'Premium'
+                                ? 'above face value — meaning YTM < coupon rate.'
+                                : 'below face value — meaning YTM > coupon rate.'}
+                        </>
+                    )}
                 </p>
             </div>
         </div>
