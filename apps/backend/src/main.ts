@@ -24,13 +24,25 @@ async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule);
 
     // ── CORS configuration ────────────────────────────────────────────────
-    // Allow the Vite dev server (or any origin declared via FRONTEND_URL) to
-    // call the API. In production, FRONTEND_URL should be set to the deployed
-    // frontend domain (e.g. https://bond-calculator.example.com).
+    // Allow: localhost (dev), FRONTEND_URL list, and any *.vercel.app (preview + prod).
+    const explicitOrigins = process.env.FRONTEND_URL
+        ? process.env.FRONTEND_URL.split(',').map((u) => u.trim())
+        : [];
+    const allowedSet = new Set([
+        'http://localhost:5173',
+        'http://localhost:3000',
+        ...explicitOrigins,
+    ]);
     app.enableCors({
-        origin: process.env.FRONTEND_URL ?? 'http://localhost:5173',
-        methods: ['GET', 'POST'],      // only the HTTP verbs this API uses
-        allowedHeaders: ['Content-Type'], // only headers the client sends
+        origin: (origin, callback) => {
+            if (!origin) return callback(null, true);
+            if (allowedSet.has(origin) || origin.endsWith('.vercel.app')) {
+                return callback(null, true);
+            }
+            callback(new Error('Not allowed by CORS'));
+        },
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type'],
     });
 
     // ── Global validation pipe ────────────────────────────────────────────
