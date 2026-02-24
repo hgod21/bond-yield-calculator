@@ -124,26 +124,31 @@ docker compose up --build
 
 ---
 
-## ☁️ Deployment
+## ☁️ Deployment (Vercel – monorepo)
 
-### Backend → Render
-1. **Create a New Web Service**: Link your GitHub repo.
-2. **Root Directory**: `apps/backend`
-3. **Build Command**: `pnpm install && pnpm build`
-4. **Start Command**: `node dist/main.js`
-5. **Environment Variables**:
-   - `NODE_ENV`: `production`
-   - `FRONTEND_URL`: Your Vercel URL (e.g., `https://bond-yield.vercel.app`)
-   - `PORT`: `3000` (or leave default)
+Both frontend and backend use the **same repo** with **Root Directory = repo root** so the workspace package `@bond/shared` is available. Create **two separate Vercel projects**, both linked to this repo.
 
-### Frontend → Vercel
-1. **Create a New Project**: Import the monorepo.
-2. **Root Directory**: `apps/frontend`
-3. **Framework Preset**: `Vite`
-4. **Build Command**: `pnpm build`
-5. **Output Directory**: `dist`
-6. **Environment Variables**:
-   - `VITE_API_URL`: Your Render backend URL (e.g., `https://bond-api.onrender.com`)
+| Setting | Backend project | Frontend project |
+|--------|------------------|------------------|
+| **Root Directory** | *(leave empty – repo root)* | *(leave empty – repo root)* |
+| **Framework Preset** | Other / NestJS | Vite |
+| **Build Command** | `pnpm run build:backend` | `pnpm run build:frontend` |
+| **Output Directory** | `apps/backend/dist` | `apps/frontend/dist` |
+| **Install Command** | `pnpm install` *(or use root `vercel.json`)* | `pnpm install` |
+
+### Backend project
+1. Import the repo → create project (e.g. `bond-yield-calculator-api`).
+2. **Root Directory**: leave empty (use repo root).
+3. **Build and Output Settings**: Build = `pnpm run build:backend`, Output = `apps/backend/dist`.
+4. **Environment variables**: `FRONTEND_URL` = your frontend URL (e.g. `https://bond-yield.vercel.app`), `NODE_ENV` = `production`.
+
+### Frontend project
+1. Import the same repo again → create a second project (e.g. `bond-yield-calculator`).
+2. **Root Directory**: leave empty (use repo root).
+3. **Build and Output Settings**: Build = `pnpm run build:frontend`, Output = `apps/frontend/dist`.
+4. **Environment variables**: `VITE_API_URL` = your backend URL (e.g. `https://bond-yield-calculator-api.vercel.app`).
+
+The root `vercel.json` sets `installCommand: "pnpm install"` for both projects.
 
 
 ---
